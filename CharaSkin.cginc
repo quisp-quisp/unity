@@ -92,7 +92,7 @@ float4 frag( v2f i ) : COLOR
 	falloffU = tex2D( _RimLightSampler, float2( falloffU, 0.25f ) ).r;
 	float3_t lightColor = diffSamplerColor.rgb * 0.5; // * 2.0;
 	combinedColor += falloffU * lightColor;
-	combinedColor += unity_AmbientSky * 0.4;
+	combinedColor += unity_AmbientSky * 0.4; // edit - add ambient lighting
 
 #ifdef ENABLE_CAST_SHADOWS
 	// Cast shadows
@@ -101,8 +101,8 @@ float4 frag( v2f i ) : COLOR
 	combinedColor = lerp( shadowColor, combinedColor, attenuation );
 #endif
 
-	if (_LightColor0.r != 0 && _LightColor0.g != 0 && _LightColor0.b != 0 && _LightColor0.a != 0)
+	if (_LightColor0.r != 0 && _LightColor0.g != 0 && _LightColor0.b != 0 && _LightColor0.a != 0) // edit - only apply _LightColor0 when directional light is turned on
 		return float4_t( combinedColor, diffSamplerColor.a ) * _Color * _LightColor0;
-	else
+	else // edit - take _LightColor0 out when it's turned off so it doesn't make everything black
 		return float4_t(combinedColor, diffSamplerColor.a) * _Color;
 }
