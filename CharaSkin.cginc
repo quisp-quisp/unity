@@ -106,3 +106,4 @@ float4 frag( v2f i ) : COLOR
 	else // edit - take _LightColor0 out when it's turned off so it doesn't make everything black
 		return float4_t(combinedColor, diffSamplerColor.a) * _Color;
 }
+
